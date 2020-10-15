@@ -22,7 +22,7 @@ The problem with asymmetric encryption is that it is slow, about 10'000 times sl
 So the obvious solution is to use the asymmetric protocol no negotiate a symmetric key to be used for the rest of the communication.
 This process of using asymmetric encryption to negotiate a symmetric key is known as _key exchange_.
 
-2.
+## 2
 It is this stage, the key exchange, that is vulnerable to quantum attacks.
 The most used algorithms for key exchange today are dependent on the fact that the integer factorization problem is hard to solve (footnote: actually, the hidden subgroup problem for finite Abelian group).
 As a practical exam, consider the following example written by the mathematician William Jevons in 1874:
@@ -36,10 +36,26 @@ That is not the case for quantum computers, however.
 Shor's algorithm can solve this problem in logarithmic time!
 This threatens the integrity of modern encryption!
 
-3.
+## 3.
 How long until this is a realistic threat?
 As of now, there exists no quantum computers powerful enough to factorize even trivially large numbers.
 The current record on a quantum computer using Shor's algorithm is 21 (3x7) (footnote: this is not the largest number factorized by quantum computers, that would be 56153. But that is using another algorithm, which is not fast for large numbers).
+
+## 4.
+It is obvious that a post-quantum secure encryption standard has to rely on some different mechanism than the current standards -- that rely on the integer factorization problem.
+As is common in cryptography research one tries to find methods that can be shown to reduce to known mathematical problems, for which there exist no known fast algorithm -- just like one did with the reduction of RSA and Diffie-Hellman into the hidden subgroup problem (integer factorization)).
+In 2016 the National Institute of Science and Technology (NIST) initiated a standardization process for finding new methods of authentication an key exchange for the post-quantum era.
+This process has gone through several rounds of discarding some submissions and moving on with the most promising.
+As late as July 2020 the third round was announced, making this a very relevant topic.
+In the third round seven submissions remain, four schemes for key exchange and three for authentication.
+
+## 5.
+Another interesting issue to consider in this context is the security of today's communication from future attack.
+An adversary could in theory record vast amounts of encrypted communication today, knowing that the information will be possible to decrypt when powerful quantum computers are available.
+There are two conclusions to be drawn from this notion.
+1) all communication that has been or is going to be encrypted with vulnerable schemes, must be regarded as theoretically compromised.
+2) post-quantum encryption standards are not something that need only be in place before the introduction of powerful quantum computers, they are needed as soon as possible.
+All information currently being encrypted using vulnerable schemes is ultimately vulnerable to a sufficiently resourceful or specifically interested adversary.
 
 
 
