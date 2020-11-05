@@ -13,19 +13,25 @@ At that point, it would simply be a matter of cracking the key-exchange, and the
 5. The issue of non-forward secret communication.
 
 ## 1
-Transport Security Layer (TSL) provides both authentication and encryption.
+At its core, all communication over the internet is essentially like shouting to each other in an crowded environment, open for anyone to hear.
+At the infancy of the internet, this was fine, as the communication was only between trusted parties.
+Today the situation is rather different, with personal details, photos, banking details, business secrets, and much more being transported over the internet.
+The answer is the Transport Security Layer (TSL), which provides both authentication and encryption.
 Authentication is the process of verifying the identity of the parties involved in the communication.
 Encryption is the process of obfuscating the information in the communication, so that it is unreadable to anyone except the intended recipient(s).
 There is an inherent issue with encryption over the web - how does the two parties, who have never met in person, establish a secure connection that is obfuscated for anyone else, when the establishment of such communication must happen over open communication?
+
 The answer is of course asymmetric encryption, such as Diffie-Hellman(footnote: technically, it may be argued whether DH is asymmetric, but it undoubtedly provides a public-key protocol) and RSA.
 The problem with asymmetric encryption is that it is slow, about 10'000 times slower (find source, obviously).
 So the obvious solution is to use the asymmetric protocol no negotiate a symmetric key to be used for the rest of the communication.
 This process of using asymmetric encryption to negotiate a symmetric key is known as _key exchange_.
 
+Note: clarify what symmetric and asymmetric communication is.
+
 ## 2
 It is this stage, the key exchange, that is vulnerable to quantum attacks.
 The most used algorithms for key exchange today are dependent on the fact that the integer factorization problem is hard to solve (footnote: actually, the hidden subgroup problem for finite Abelian group).
-As a practical exam, consider the following example written by the mathematician William Jevons in 1874:
+As a practical example, consider the following written by the mathematician William Jevons in 1874:
 > Can the reader say what two numbers multiplied together will produce the number 8616460799?[12] I think it unlikely that anyone but myself will ever know.
 > 
 > - William Stanley Jevons, 1874
