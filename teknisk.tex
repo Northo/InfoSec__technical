@@ -37,7 +37,7 @@ quantum, computer, encryption
 \end{IEEEkeywords}
 
 \section{Introduction}
-At its core, all communication over the internet is essentially like shouting to each other in an crowded environment, open for anyone to hear.
+At its core, all communication over the internet is essentially like shouting to each other in a crowded environment, open for anyone to hear.
 At the infancy of the internet, this was fine, as the communication was only between trusted parties.
 Today the situation is rather different, with personal details, photos, banking details, business secrets, and much more being transported over the internet.
 The answer is the Transport Security Layer (TSL), which provides both authentication and encryption.
@@ -78,14 +78,14 @@ She then encrypts in with Bob's public key, and sends the result to Bob.
 The only way to decrypt the message, is to use Bob's private key, which only Bob knows.
 They now both have access to the symmetric key that Alice generated!
 Diffie-Hellman works on a similar principle, but with slight variations.
-Alice and Bob first generate number each, a and b, which are kept secret.
+Alice and Bob first generate a number each, a and b, which are kept secret.
 They also agree on some number g, which is open for anyone to see.
-Alice then computes the number $g^a$ to Bob.
+Alice then computes the number $g^a$, and sends it to Bob.
 Bob takes that number, and calculates $(g^a)^b$.
 He also computes $g^b$, which he sends to Alice.
 By the simple fact that $(g^b)^a = g^{ab} = (g^b)^a$, they may now both compute $g^{ab}$, which is the symmetric key.
-Notice that the only numbers ``available'' to anyone, the ones that are sent in the open, are $g, g^a and g^b$.
-As was mentioned earlier, finding $a$ form $g^a$ is difficult, and thus an adversary is unable to find $g^{ba}$.
+Notice that the only numbers ``available'' to anyone, the ones that are sent in the open, are $g, g^a$ and $g^b$.
+As was mentioned earlier, finding $a$ from $g^a$ is difficult, and thus an adversary is unable to find $g^{ba}$.
 Of course, note also that $g^a g^b = g^{a+b}\neq g^{ab}$.
 
 
