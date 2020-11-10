@@ -14,11 +14,9 @@
 
 \title{On post-quantum cryptography}
 
-\author{\IEEEauthorblockN{Thorvald Ballestad}
-\IEEEauthorblockA{\textit{Department of Physics} \\
-\textit{NTNU}\\
-Trondheim, Norway \\
-thorvald.tb@gmail.com}}
+\author{\IEEEauthorblockN{Thorvald Ballestad thorvald.tb@gmail.com}
+\IEEEauthorblockA{\textit{Department of Physics, NTNU} -- Trondheim, Norway}
+}
 
 \maketitle
 
@@ -49,15 +47,15 @@ Most of the secure communication on the internet today is provided by the Transp
 In the introduction we mentioned encryption and authentication, both of which are relevant in post-quantum cryptography.
 For the sake of brevity however, we focus here mainly on encryption.
 
-There is an inherent issue with encryption over the web - how does two parties, who have never met in person, establish a secure connection that is obfuscated for anyone else, when the establishment of such communication must happen over open communication?
+There is an inherent issue with encryption over the web -- how does two parties, who have never met in person, establish a secure connection that is obfuscated for anyone else, when the establishment of such communication must happen over open communication?
 The answer is asymmetric encryption, also known as public-key encryption
-\footnote{The author is at unease calling general asymmetric encryption public-key encryption, as it paints a misleading mental image for some algorithms. The term asymmetric will therefor be used throughout.}.
+\footnote{The author is at unease calling general asymmetric encryption public-key encryption, as it paints a misleading mental image for some algorithms. The term \emph{asymmetric} will therefor be used throughout.}.
 The most well known asymmetric encryption algorithm is RSA, which the user might have heard of.
 The Diffie-Hellman algorithm, with its many variants, is becoming increasingly more popular, for its many advantages over RSA.
 They do both, however, rely on the same basic principle: asymmetric encryption are methods for establishing a secure connection between parties without requiring a pre-established shared secret.
 
 Asymmetric encryption must be seen in contrast to \emph{symmetric} encryption, such as the Advanced Encryption Standard (AES).
-In asymmetric encryption, the involved parties must have a shared secret before the communication initiates.
+In symmetric encryption, the involved parties must have a shared secret before the communication initiates.
 As a trivial example, take the Caesar cipher, where each letter of the alphabet is ``shifted'' some number $n$ places.
 For example, for $n=3$ the string ``ABC'' would be ``DEF''.
 This encryption only works if both parties already know that $n=3$, which is the shared secret, or \emph{key}.
@@ -76,50 +74,41 @@ Both RSA and Diffie-Hellman relies on the fact that there are no known algorithm
 The hidden subgroup problem is a generalization of the factorization problem.
 As a practical example, consider the following written by the mathematician William Jevons in 1874:
 \begin{quoting}
-Can the reader say what two numbers multiplied together will produce the number 8616460799?[12] I think it unlikely that anyone but myself will ever know.
+Can the reader say what two numbers multiplied together will produce the number 8616460799? I think it unlikely that anyone but myself will ever know.
  
 - William Stanley Jevons, 1874
 \end{quoting}
 The answer is $89681 \times 96079$, which is not difficult to find with modern computers.
 However, the concept stands: given two primes a and b, it is simple to compute $N = a \times b$.
 However, if a and b are sufficiently large, it is extremely hard to find a and b given only N.
-A similar problem exists for discrete logarithms: find the integer $k$ such that $b^k = a$.
+A similar problem exists for discrete logarithms: given numbers $N$ and $a$, find the integer $k$ such that $a^k = N$.
 One may show that solving one of the problems, allows you to solve the other.
 
 Both Diffie-Hellman and RSA are, though not terribly complicated, too lengthy to describe in depth here, so a quick outline will suffice.
-Suppose we have two people, Alice and Bob, who which to establish encrypted communication.
-Firstly, let us describe RSA.
-Both Alice and Bob will have a pair of keys (numbers), one private and one public.
-What this means is that the private key is a secret, while the public key is open for anyone to read.
-The keys are such that something encrypted with one of the keys, may only be decrypted with the other.
-One party, let us say Alice, will initiate the exchange by generating a new key, that will be the shared secret for the symmetric exchange -- this is the key that she must communicate to Bob, without anyone else being able to read it.
-She then encrypts in with Bob's public key, and sends the result to Bob.
-The only way to decrypt the message, is to use Bob's private key, which only Bob knows.
-They now both have access to the symmetric key that Alice generated!
-Diffie-Hellman works on a similar principle, but with slight variations.
+Suppose we have two people, Alice and Bob, who wish to establish encrypted communication.
+We will here describe the fundamentals of Diffie-Hellman.
 Alice and Bob first generate a number each, a and b, which are kept secret.
 They also agree on some number g, which is open for anyone to see.
 Alice then computes the number $g^a$, and sends it to Bob.
-Bob takes that number, and calculates $(g^a)^b$.
-He also computes $g^b$, which he sends to Alice.
-By the simple fact that $(g^b)^a = g^{ab} = (g^b)^a$, they may now both compute $g^{ab}$, which is the symmetric key.
+Bob computes $g^b$, which he sends to Alice.
+By the simple fact that $(g^b)^a = g^{ab} = (g^b)^a$, they may now both compute $g^{ab}$, which they use as a symmetric key.
 Notice that the only numbers ``available'' to anyone, the ones that are sent in the open, are $g, g^a$ and $g^b$.
 As was mentioned earlier, finding $a$ from $g^a$ is difficult, and thus an adversary is unable to find $g^{ba}$.
 Of course, note also that $g^a g^b = g^{a+b}\neq g^{ab}$.
 
-
-Note: the author feels the need to reiterate that we have here only discussed encryption, not authentication. Authentication is also of major importance to internet security.
-
-
-For the sake of completeness, one should mention that asymmetric encryption is rarely used for the bulk of the communication.
-The problem with asymmetric encryption is that it is slow, about 10'000 times slower than symmetric methods.
-The solution is to use the asymmetric protocol to negotiate a symmetric key to be used for the rest of the communication.
-This process of using asymmetric encryption to negotiate a symmetric key is known as \emph{key exchange}.
+%% Firstly, let us describe RSA.
+%% Both Alice and Bob will have a pair of keys (numbers), one private and one public.
+%% What this means is that the private key is a secret, while the public key is open for anyone to read.
+%% The keys are such that something encrypted with one of the keys, may only be decrypted with the other.
+%% One party, let us say Alice, will initiate the exchange by generating a new key, that will be the shared secret for the symmetric exchange -- this is the key that she must communicate to Bob, without anyone else being able to read it.
+%% She then encrypts in with Bob's public key, and sends the result to Bob.
+%% The only way to decrypt the message, is to use Bob's private key, which only Bob knows.
+%% They now both have access to the symmetric key that Alice generated!
 
 
 \section{Why are quantum computers a threat?}
 Put quite pedantically, the reason that the factorization problem is hard to solve, is that given $N = a \times b$, with $a,b$ some unknown primes, we know no function $f$ such that $a = f(N)$ (or $b=\tilde{f}(N)$ for that matter).
-One must simply try to brute force the problem, guessing $a$ and $b$ until we find some numbers that produce $N$. \footnote{There exists techniques for limiting the what $a$ and $b$ may be and finding the most efficient order in which to choose, however the principle stands}
+One must simply try to brute force the problem, guessing $a$ and $b$ until we find some numbers that produce $N$. \footnote{There exists techniques for limiting what $a$ and $b$ may be and finding the most efficient order in which to choose, however the principle stands.}
 With $N$ being numbers with hundreds of digits, this problem is simply too time consuming to be practically solvable.
 For the technically inclined, we mention that the best known \emph{classical} method for finding the factors of $N$ is the general number field sieve, which in essence is a clever way to brute force, has a complexity of
 $\mathcal{O}(e^{1.9 (\log N)^\frac13 (\log\log N)^\frac23})$ with the important part being that we have an exponential function.
@@ -133,23 +122,24 @@ Positional notation with base two allows us to represent any integer using this 
 For example, 3 is 0011 and 9 is 1001, where the two values each bit can take is here 1 or 0.
 A quantum computer works in much the same way.
 It has qbits, which may have one of two values, 1 or 0.
-However, exploiting the nature of quantum mechanics, we may but one quantum bit in several states at the same time, say 1 \emph{and} 0.
-Or we may say that it is almost entirely in the state 1, but also a bit in the state 0, say 90\% and 10\%.
+However, exploiting the nature of quantum mechanics, we may put one quantum bit in several states at the same time, say 1 \emph{and} 0.
+Or we may say that it is almost entirely in the state 1, but also a little in the state 0, say 90\% and 10\%.
 The important thing to note is that the qbit is \emph{not} in the state 0.9 or 0.5!
 It is simply in the state 1 \emph{and} 0, a concept that only exists in quantum mechanics that is not relatable in our classical world.
 So if we have four qbits, we may have the state 1001 and 0011 at the same time, or in decimal the numbers 9 \emph{and} 3.
 Like classical computers, quantum computers may perform computations on these numbers, for example add one, giving 10 and 4, or 1010 and 0100.
 The important thing is that the quantum computer did not perform 9+1=10 and \emph{then} 3+1=4, it performed (9 \emph{and} 3) + 1 = 10 \emph{and} 4!
 Quite simplified, Shor's algorithm exploits this by trying all possible factors of $N$ at the same time.
-As a mental image, though not correct, it may be helpful to imagine that we have the state 2 and 3 and 5 and 7 and ... and then try to divide $N$ by that state, we should then get $N$/2 and $N$/3 and $N$/5 and $N$/7 and ..., and we simply find the number that is also a integer. \footnote{Note that this is \emph{vastly} simplified. Anyone with knowledge of quantum mechanics will immediately recognize the issue of measurement in this example. The actual algorithm exploits a clever measurement giving a periodic state that through a quantum fourier transform may more easily be measured}.
+As a mental image, though not correct, it may be helpful to imagine that we have the state 2 and 3 and 5 and 7 and ... and then try to divide $N$ by that state, we should then get $N$/2 and $N$/3 and $N$/5 and $N$/7 and ..., and we simply find the number that is also a integer. \footnote{Note that this is \emph{vastly} simplified. Anyone with knowledge of quantum mechanics will immediately recognize the issue of measurement in this example. The actual algorithm exploits a clever measurement giving a periodic state that through a quantum fourier transform may more easily be measured.}
 
+Note to self:
 Shor's algorithm may be run on a classical machine, but one of the steps is slow.
 
 
 \subsection{When will the quantum computers be here?}
 How long until this is a realistic threat?
 As of now, there exists no quantum computers powerful enough to factorize even trivially large numbers.
-The current record on a quantum computer using Shor's algorithm is 21 (3x7) (footnote: this is not the largest number factorized by quantum computers, that would be 56153. But that is using another algorithm, which is not fast for large numbers).
+The current record on a quantum computer using Shor's algorithm is 21 (3x7). \footnote{This is not the largest number factorized by quantum computers, that would be 56153. But that is using another algorithm, which is not fast for large numbers.}
 
 \subsection{The solution}
 It is obvious that a post-quantum secure encryption standard has to rely on some different mechanism than the current standards -- that rely on the integer factorization problem.
@@ -158,6 +148,8 @@ In 2016 the National Institute of Science and Technology (NIST) initiated a stan
 This process has gone through several rounds of discarding some submissions and moving on with the most promising.
 As late as July 2020 the third round was announced, making this a very relevant topic.
 In the third round seven submissions remain, four schemes for key exchange and three for authentication.
+
+Maybe interesting to compare size of keys and efficiency to RSA and Diffie-Hellmann (and ECD)
 
 \subsection{Why it matters now!}
 Another interesting issue to consider in this context is the security of today's communication from future attack.
@@ -177,33 +169,8 @@ acknowledgments in the unnumbered footnote on the first page.
 
 \section*{References}
 
-Please number citations consecutively within brackets \cite{b1}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
-
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
-abstract or reference list. Use letters for table footnotes.
-
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
-element symbols.
-
-For papers published in translation journals, please give the English 
-citation first, followed by the original foreign-language citation \cite{b6}.
-
 \begin{thebibliography}{00}
-\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
+\bibitem{1} TODO
 \end{thebibliography}
 \vspace{12pt}
 \color{red}

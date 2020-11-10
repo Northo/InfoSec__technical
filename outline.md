@@ -64,6 +64,23 @@ There are two conclusions to be drawn from this notion.
 All information currently being encrypted using vulnerable schemes is ultimately vulnerable to a sufficiently resourceful or specifically interested adversary.
 
 
+# New outline
+
+Introduction
+
+How encryption works
+ - Symmetric and asymmetric encryption, AES and RSA/DH
+ - Use asym to generate sym, but only for performance
+ - How they work, but only enough to be able to describe why QC are a threat
+
+Why quantum computers are a threat
+ - Only to asymmetric, not to symmetric
+
+When are quantum computers a threat
+
+Why it matters now
+
+
 
 ## List of literature:
 - https://www.nist.gov/news-events/news/2020/07/nists-post-quantum-cryptography-program-enters-selection-round
