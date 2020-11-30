@@ -1,7 +1,7 @@
 \documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
-\usepackage{cite}
+%\usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
 \usepackage{graphicx}
@@ -10,6 +10,10 @@
 \usepackage{quoting}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+%\usepackage{ieeetr}{biblatex}
+%\bibliography{sample}
+
 \begin{document}
 
 \title{On post-quantum cryptography}
@@ -41,11 +45,11 @@ Today the situation is rather different, with personal details, photos, banking 
 We need to verify the identity of the other party, and also ensure that no other parties may read our communication -- we need authentication and encryption.
 Authentication is the process of verifying the identity of the parties involved in the communication.
 Encryption is the process of obfuscating the information in the communication, so that it is unreadable to anyone except the intended recipient(s).
-Most of the secure communication on the internet today is provided by the Transport Security Layer (TSL), which provides both authentication and encryption.
+Most of the secure communication on the internet today is provided by the Transport Security Layer (TSL)\cite{sslpulse.2020}, which provides both authentication and encryption.
 
 \section{A quick introduction to encryption}
 In the introduction we mentioned encryption and authentication, both of which are relevant in post-quantum cryptography.
-For the sake of brevity however, we focus here mainly on encryption.
+For the sake of brevity however, we focus here on encryption.
 
 There is an inherent issue with encryption over the web -- how does two parties, who have never met in person, establish a secure connection that is obfuscated for anyone else, when the establishment of such communication must happen over open communication?
 The answer is asymmetric encryption, also known as public-key encryption
@@ -54,25 +58,25 @@ The most well known asymmetric encryption algorithm is RSA, which the reader mig
 The Diffie-Hellman algorithm, with its many variants, is becoming increasingly more popular, for its many advantages over RSA.
 They do both, however, rely on the same basic principle: asymmetric encryption are methods for establishing a secure connection between parties without requiring a pre-established shared secret.
 
-Asymmetric encryption must be seen in contrast to \emph{symmetric} encryption, such as the Advanced Encryption Standard (AES).
-In symmetric encryption, the involved parties must have a shared secret before the communication initiates.
-As a trivial example, take the Caesar cipher, where each letter of the alphabet is ``shifted'' some number $n$ places.
-For example, for $n=3$ the string ``ABC'' would be ``DEF''.
-This encryption only works if both parties already know that $n=3$, which is the shared secret, or \emph{key}.
-The aforementioned AES is the de facto standard for asymmetric encryption, used in TLS.
-One might wonder why a symmetric cipher would be used on the internet, where we have just established that the parties have no shared secret -- a problem solved by \emph{asymmetric} encryption.
-The answer is simply performance.
-Asymmetric encryption is slow.
-About 10'000 times slower than symmetric encryption.
-The clever solution is then to initiate the communication with asymmetric encryption, such as Diffie-Hellman, and use that to establish some shared secret.
-That shared secret is then the key for the rest of the communication, which is encrypted with a symmetric method, thus getting the performance benefit of symmetric encryption.
-The process of using asymmetric encryption to establish a shared key for the rest of the session, is known as \emph{key exchange}.
-As we will see, it is this process that will be of interest in our discussion on quantum computers.
+%% Asymmetric encryption must be seen in contrast to \emph{symmetric} encryption, such as the Advanced Encryption Standard (AES).
+%% In symmetric encryption, the involved parties must have a shared secret before the communication initiates.
+%% As a trivial example, take the Caesar cipher, where each letter of the alphabet is ``shifted'' some number $n$ places.
+%% For example, for $n=3$ the string ``ABC'' would be ``DEF''.
+%% This encryption only works if both parties already know that $n=3$, which is the shared secret, or \emph{key}.
+%% The aforementioned AES is the de facto standard for asymmetric encryption, used in TLS.
+%% One might wonder why a symmetric cipher would be used on the internet, where we have just established that the parties have no shared secret -- a problem solved by \emph{asymmetric} encryption.
+%% The answer is simply performance.
+%% Asymmetric encryption is slow.
+%% About 10'000 times slower than symmetric encryption.
+%% The clever solution is then to initiate the communication with asymmetric encryption, such as Diffie-Hellman, and use that to establish some shared secret.
+%% That shared secret is then the key for the rest of the communication, which is encrypted with a symmetric method, thus getting the performance benefit of symmetric encryption.
+%% The process of using asymmetric encryption to establish a shared key for the rest of the session, is known as \emph{key exchange}.
+%% As we will see, it is this process that will be of interest in our discussion on quantum computers.
 
 \subsection{The basic principle of asymmetric encryption}
 Both RSA and Diffie-Hellman relies on the fact that there are no known algorithms for solving the hidden subgroup problem quickly.
 The hidden subgroup problem is a generalization of the factorization problem.
-As a practical example, consider the following written by the mathematician William Jevons in 1874:
+As a practical example, consider the following written by the mathematician William Jevons in 1874\cite{oldMathGuy}:
 \begin{quoting}
 Can the reader say what two numbers multiplied together will produce the number 8616460799? I think it unlikely that anyone but myself will ever know.
  
@@ -86,7 +90,7 @@ One may show that solving one of the problems, allows you to solve the other.
 
 Both Diffie-Hellman and RSA are, though not terribly complicated, too lengthy to describe in depth here, so a quick outline will suffice.
 Suppose we have two people, Alice and Bob, who wish to establish encrypted communication.
-We will here describe the fundamentals of Diffie-Hellman.
+We will here describe the fundamentals of Diffie-Hellman\cite{diffieHellman}.
 Alice and Bob first generate a number each, a and b, which are kept secret.
 They also agree on some number g, which is open for anyone to see.
 Alice then computes the number $g^a$, and sends it to Bob.
@@ -108,7 +112,7 @@ Of course, note also that $g^a g^b = g^{a+b}\neq g^{ab}$.
 
 \section{Why are quantum computers a threat?}
 Put quite pedantically, the reason that the factorization problem is hard to solve, is that given $N = a \times b$, with $a,b$ some unknown primes, we know no function $f$ such that $a = f(N)$ (or $b=\tilde{f}(N)$ for that matter).
-One must simply try to brute force the problem, guessing $a$ and $b$ until we find some numbers that produce $N$. \footnote{There exists techniques for limiting what $a$ and $b$ may be and finding the most efficient order in which to choose, however the principle stands.}
+One must simply guess $a$ and $b$ until we find some numbers that produce $N$ -- a brute force attack. \footnote{There exists techniques for limiting what $a$ and $b$ may be and finding the most efficient order in which to choose, however the principle stands.}
 With $N$ being numbers with hundreds of digits, this problem is simply too time consuming to be practically solvable.
 For the technically inclined, we mention that the best known \emph{classical} method for finding the factors of $N$ is the general number field sieve, which in essence is a clever way to brute force, has a complexity of
 $\mathcal{O}(e^{1.9 (\log N)^\frac13 (\log\log N)^\frac23})$ with the important part being that we have an exponential function.
@@ -139,11 +143,11 @@ Shor's algorithm may be run on a classical machine, but one of the steps is slow
 \subsection{When will the quantum computers be here?}
 How long until this is a realistic threat?
 As of now, there exists no quantum computers powerful enough to factorize even trivially large numbers.
-The current record on a quantum computer using Shor's algorithm is 21 (3x7). \footnote{This is not the largest number factorized by quantum computers, that would be 56153. But that is using another algorithm, which is not fast for large numbers.}
+The current record on a quantum computer using Shor's algorithm is 21 (3x7)\cite{shor21}. \footnote{This is not the largest number factorized by quantum computers, that would be 56153. But that is using another algorithm, which is not fast for large numbers.}
 
 \subsection{The solution}
 It is obvious that a post-quantum secure encryption standard has to rely on some different mechanism than the current standards -- that rely on the integer factorization problem.
-As is common in cryptography research one tries to find methods that can be shown to reduce to known mathematical problems, for which there exist no known fast algorithm -- just like one did with the reduction of RSA and Diffie-Hellman into the hidden subgroup problem (integer factorization)).
+As is common in cryptography research one tries to find methods that can be shown to reduce to known mathematical problems, for which there exist no known fast algorithm -- just like one did with the reduction of RSA and Diffie-Hellman into the hidden subgroup problem (integer factorization).
 In 2016 the National Institute of Science and Technology (NIST) initiated a standardization process for finding new methods of authentication an key exchange for the post-quantum era.
 This process has gone through several rounds of discarding some submissions and moving on with the most promising.
 As late as July 2020 the third round was announced, making this a very relevant topic.
@@ -160,18 +164,10 @@ There are two conclusions to be drawn from this notion.
 All information currently being encrypted using vulnerable schemes is ultimately vulnerable to a sufficiently resourceful or specifically interested adversary.
 
 
-\section*{Acknowledgment}
+\bibliographystyle{IEEEtran}
+\bibliography{sample}
 
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
 
-\section*{References}
-
-\begin{thebibliography}{00}
-\bibitem{1} TODO
-\end{thebibliography}
 \vspace{12pt}
 \color{red}
 IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
