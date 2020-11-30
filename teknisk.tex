@@ -18,9 +18,10 @@
 
 \title{On post-quantum cryptography}
 
-\author{\IEEEauthorblockN{Thorvald Ballestad thorvald.tb@gmail.com}
-\IEEEauthorblockA{\textit{Department of Physics, NTNU} -- Trondheim, Norway}
-}
+\author{\IEEEauthorblockN{Thorvald Ballestad thorvald.tb@gmail.com}}
+%% \author{\IEEEauthorblockN{Thorvald Ballestad thorvald.tb@gmail.com}
+%% \IEEEauthorblockA{\textit{Department of Physics, NTNU} -- Trondheim, Norway}
+%% }
 
 \maketitle
 
@@ -54,9 +55,10 @@ For the sake of brevity however, we focus here on encryption.
 There is an inherent issue with encryption over the web -- how does two parties, who have never met in person, establish a secure connection that is obfuscated for anyone else, when the establishment of such communication must happen over open communication?
 The answer is asymmetric encryption, also known as public-key encryption
 \footnote{The author is at unease calling general asymmetric encryption public-key encryption, as it paints a misleading mental image for some algorithms. The term \emph{asymmetric} will therefor be used throughout.}.
+
 The most well known asymmetric encryption algorithm is RSA, which the reader might have heard of.
-The Diffie-Hellman algorithm, with its many variants, is becoming increasingly more popular, for its many advantages over RSA.
-They do both, however, rely on the same basic principle: asymmetric encryption are methods for establishing a secure connection between parties without requiring a pre-established shared secret.
+There is also the Diffie-Hellman algorithm, with its many variants, which becoming increasingly more popular, for its many advantages over RSA.
+They do both, however, rely on the same basic principle: asymmetric encryption schemes are methods for establishing a secure connection between parties without requiring a pre-established shared secret.
 
 %% Asymmetric encryption must be seen in contrast to \emph{symmetric} encryption, such as the Advanced Encryption Standard (AES).
 %% In symmetric encryption, the involved parties must have a shared secret before the communication initiates.
@@ -120,7 +122,8 @@ The best known \emph{quantum} algorithm has a complexity of only $\mathcal{O}((\
 That algorithm is known as Shor's algorithm.
 
 We will not in this article give a detailed explanation of neither how Shor's algorithm works nor how a quantum computer works, as that is vastly outside the scope of this article.
-A superficial explanation will suffice, and the author is confident that it will be sufficient to appreciate the threat of quantum computers.
+A superficial explanation will suffice, however the author is confident that it will be sufficient in order to appreciate the threat of quantum computers.
+
 On a normal computer numbers are represented by \emph{bits} -- something that may take one of two values.
 Positional notation with base two allows us to represent any integer using this system.
 For example, 3 is 0011 and 9 is 1001, where the two values each bit can take is here 1 or 0.
@@ -130,20 +133,21 @@ However, exploiting the nature of quantum mechanics, we may put one quantum bit 
 Or we may say that it is almost entirely in the state 1, but also a little in the state 0, say 90\% and 10\%.
 The important thing to note is that the qbit is \emph{not} in the state 0.9 or 0.5!
 It is simply in the state 1 \emph{and} 0, a concept that only exists in quantum mechanics that is not relatable in our classical world.
-So if we have four qbits, we may have the state 1001 and 0011 at the same time, or in decimal the numbers 9 \emph{and} 3.
+
+Given four qbits, we may have the state 1001 \emph{and} 0011 at the same time, or in decimal the numbers 9 \emph{and} 3.
 Like classical computers, quantum computers may perform computations on these numbers, for example add one, giving 10 and 4, or 1010 and 0100.
 The important thing is that the quantum computer did not perform 9+1=10 and \emph{then} 3+1=4, it performed (9 \emph{and} 3) + 1 = 10 \emph{and} 4!
 Quite simplified, Shor's algorithm exploits this by trying all possible factors of $N$ at the same time.
 As a mental image, though not correct, it may be helpful to imagine that we have the state 2 and 3 and 5 and 7 and ... and then try to divide $N$ by that state, we should then get $N$/2 and $N$/3 and $N$/5 and $N$/7 and ..., and we simply find the number that is also a integer. \footnote{Note that this is \emph{vastly} simplified. Anyone with knowledge of quantum mechanics will immediately recognize the issue of measurement in this example. The actual algorithm exploits a clever measurement giving a periodic state that through a quantum fourier transform may more easily be measured.}
 
-Note to self:
-Shor's algorithm may be run on a classical machine, but one of the steps is slow.
+%% Note to self:
+%% Shor's algorithm may be run on a classical machine, but one of the steps is slow.
 
 
 \subsection{When will the quantum computers be here?}
 How long until this is a realistic threat?
 As of now, there exists no quantum computers powerful enough to factorize even trivially large numbers.
-The current record on a quantum computer using Shor's algorithm is 21 (3x7)\cite{shor21}. \footnote{This is not the largest number factorized by quantum computers, that would be 56153. But that is using another algorithm, which is not fast for large numbers.}
+The current record on a quantum computer using Shor's algorithm is 21 ($3\times7$)\cite{shor21}. \footnote{This is not the largest number factorized by quantum computers, that would be 56153. But that is using another algorithm, which is not fast for large numbers.}
 
 \subsection{The solution}
 It is obvious that a post-quantum secure encryption standard has to rely on some different mechanism than the current standards -- that rely on the integer factorization problem.
@@ -156,7 +160,7 @@ In the third round seven submissions remain, four schemes for key exchange and t
 Maybe interesting to compare size of keys and efficiency to RSA and Diffie-Hellmann (and ECD)
 
 \subsection{Why it matters now!}
-Another interesting issue to consider in this context is the security of today's communication from future attack.
+One important issue to consider is the security of today's communication from future attack.
 An adversary could in theory record vast amounts of encrypted communication today, knowing that the information will be possible to decrypt when powerful quantum computers are available.
 There are two conclusions to be drawn from this notion.
 1) all communication that has been or is going to be encrypted with vulnerable schemes, must be regarded as theoretically compromised.
@@ -166,10 +170,5 @@ All information currently being encrypted using vulnerable schemes is ultimately
 
 \bibliographystyle{IEEEtran}
 \bibliography{sample}
-
-
-\vspace{12pt}
-\color{red}
-IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
 
 \end{document}
