@@ -60,6 +60,14 @@ The most well known asymmetric encryption algorithm is RSA, which the reader mig
 There is also the Diffie-Hellman algorithm, with its many variants, which becoming increasingly more popular, for its many advantages over RSA.
 They do both, however, rely on the same basic principle: asymmetric encryption schemes are methods for establishing a secure connection between parties without requiring a pre-established shared secret.
 
+%% In modern encryption, asymmetric encryption is mainly used as a key-exchange protocol.
+%% Symmetric schemes, methods that require a shared secret, are hugely superior in performance -- about 10'000 times faster.
+
+Asymmetric encryption must be seen in contrast to \emph{symmetric} encryption, such as the Advanced Encryption Standard (AES).
+In symmetric encryption, the involved parties must have a shared secret before the communication initiates.
+The advantage of symmetric encryption over asymmetric encryption is performance -- symmetric schemes are about 10'000 times faster than asymmetric schemes.
+For this reason, the bulk of online communication is encrypted using symmetric encryption, while asymmetric schemes are used only for establishing the key needed in the symmetric scheme -- a process known as key exchange.
+
 %% Asymmetric encryption must be seen in contrast to \emph{symmetric} encryption, such as the Advanced Encryption Standard (AES).
 %% In symmetric encryption, the involved parties must have a shared secret before the communication initiates.
 %% As a trivial example, take the Caesar cipher, where each letter of the alphabet is ``shifted'' some number $n$ places.
@@ -116,9 +124,10 @@ Of course, note also that $g^a g^b = g^{a+b}\neq g^{ab}$.
 Put quite pedantically, the reason that the factorization problem is hard to solve, is that given $N = a \times b$, with $a,b$ some unknown primes, we know no function $f$ such that $a = f(N)$ (or $b=\tilde{f}(N)$ for that matter).
 One must simply guess $a$ and $b$ until we find some numbers that produce $N$ -- a brute force attack. \footnote{There exists techniques for limiting what $a$ and $b$ may be and finding the most efficient order in which to choose, however the principle stands.}
 With $N$ being numbers with hundreds of digits, this problem is simply too time consuming to be practically solvable.
-For the technically inclined, we mention that the best known \emph{classical} method for finding the factors of $N$ is the general number field sieve, which in essence is a clever way to brute force, has a complexity of
-$\mathcal{O}(e^{1.9 (\log N)^\frac13 (\log\log N)^\frac23})$ with the important part being that we have an exponential function.
-The best known \emph{quantum} algorithm has a complexity of only $\mathcal{O}((\log N)^2 (\log \log N)(\log \log\log N))$, with the important part being that the leading term here is some power of the logarithm.
+%% For the technically inclined, we mention that the best known \emph{classical} method for finding the factors of $N$ is the general number field sieve, which in essence is a clever way to brute force, has a complexity of
+%% $\mathcal{O}(e^{1.9 (\log N)^\frac13 (\log\log N)^\frac23})$ with the important part being that we have an exponential function.
+%% The best known \emph{quantum} algorithm has a complexity of only $\mathcal{O}((\log N)^2 (\log \log N)(\log \log\log N))$, with the important part being that the leading term here is some power of the logarithm.
+On quantum computers there does however exist an efficient method for solving the factorization problem.
 That algorithm is known as Shor's algorithm.
 
 We will not in this article give a detailed explanation of neither how Shor's algorithm works nor how a quantum computer works, as that is vastly outside the scope of this article.
