@@ -50,7 +50,7 @@ For the sake of brevity however, we focus here mainly on encryption.
 There is an inherent issue with encryption over the web -- how does two parties, who have never met in person, establish a secure connection that is obfuscated for anyone else, when the establishment of such communication must happen over open communication?
 The answer is asymmetric encryption, also known as public-key encryption
 \footnote{The author is at unease calling general asymmetric encryption public-key encryption, as it paints a misleading mental image for some algorithms. The term \emph{asymmetric} will therefor be used throughout.}.
-The most well known asymmetric encryption algorithm is RSA, which the user might have heard of.
+The most well known asymmetric encryption algorithm is RSA, which the reader might have heard of.
 The Diffie-Hellman algorithm, with its many variants, is becoming increasingly more popular, for its many advantages over RSA.
 They do both, however, rely on the same basic principle: asymmetric encryption are methods for establishing a secure connection between parties without requiring a pre-established shared secret.
 
@@ -91,7 +91,7 @@ Alice and Bob first generate a number each, a and b, which are kept secret.
 They also agree on some number g, which is open for anyone to see.
 Alice then computes the number $g^a$, and sends it to Bob.
 Bob computes $g^b$, which he sends to Alice.
-By the simple fact that $(g^b)^a = g^{ab} = (g^b)^a$, they may now both compute $g^{ab}$, which they use as a symmetric key.
+By the simple fact that $(g^b)^a = g^{ab} = (g^a)^b$, they may now both compute $g^{ab}$, which they use as a symmetric key.
 Notice that the only numbers ``available'' to anyone, the ones that are sent in the open, are $g, g^a$ and $g^b$.
 As was mentioned earlier, finding $a$ from $g^a$ is difficult, and thus an adversary is unable to find $g^{ba}$.
 Of course, note also that $g^a g^b = g^{a+b}\neq g^{ab}$.
