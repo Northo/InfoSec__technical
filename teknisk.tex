@@ -15,8 +15,9 @@
 %\bibliography{sample}
 
 \begin{document}
-
 \title{On post-quantum cryptography}
+\title{Encryption in the post-quantum era}
+\title{The need for new encryption in the era of quantum computing}
 
 \author{\IEEEauthorblockN{Thorvald Ballestad thorvald.tb@gmail.com}}
 %% \author{\IEEEauthorblockN{Thorvald Ballestad thorvald.tb@gmail.com}
@@ -35,9 +36,9 @@
   In this paper, we will explore the need for new encryption in the era of quantum computing.
 \end{abstract}
 
-\begin{IEEEkeywords}
-quantum, computer, encryption
-\end{IEEEkeywords}
+%% \begin{IEEEkeywords}
+%% quantum, computer, encryption
+%% \end{IEEEkeywords}
 
 \section{Introduction}
 At its core, all communication over the internet is essentially like shouting to each other in a crowded environment, open for anyone to hear.
@@ -57,7 +58,7 @@ The answer is asymmetric encryption, also known as public-key encryption
 \footnote{The author is at unease calling general asymmetric encryption public-key encryption, as it paints a misleading mental image for some algorithms. The term \emph{asymmetric} will therefor be used throughout.}.
 
 The most well known asymmetric encryption algorithm is RSA, which the reader might have heard of.
-There is also the Diffie-Hellman algorithm, with its many variants, which becoming increasingly more popular, for its many advantages over RSA.
+There is also the Diffie-Hellman algorithm, with its many variants, which becoming increasingly more popular, for its many advantages over RSA\cite{cryptographyStallings}.
 They do both, however, rely on the same basic principle: asymmetric encryption schemes are methods for establishing a secure connection between parties without requiring a pre-established shared secret.
 
 %% In modern encryption, asymmetric encryption is mainly used as a key-exchange protocol.
@@ -152,23 +153,21 @@ As a mental image, though not correct, it may be helpful to imagine that we have
 %% Note to self:
 %% Shor's algorithm may be run on a classical machine, but one of the steps is slow.
 
-
-\subsection{When will the quantum computers be here?}
-How long until this is a realistic threat?
-As of now, there exists no quantum computers powerful enough to factorize even trivially large numbers.
-The current record on a quantum computer using Shor's algorithm is 21 ($3\times7$)\cite{shor21}. \footnote{This is not the largest number factorized by quantum computers, that would be 56153. But that is using another algorithm, which is not fast for large numbers.}
-
 \subsection{The solution}
-It is obvious that a post-quantum secure encryption standard has to rely on some different mechanism than the current standards -- that rely on the integer factorization problem.
+It is obvious that a post-quantum secure encryption standard has to rely on some different mechanism than the current standards -- the factorization problem.
 As is common in cryptography research one tries to find methods that can be shown to reduce to known mathematical problems, for which there exist no known fast algorithm -- just like one did with the reduction of RSA and Diffie-Hellman into the hidden subgroup problem (integer factorization).
 In 2016 the National Institute of Science and Technology (NIST) initiated a standardization process for finding new methods of authentication an key exchange for the post-quantum era.
 This process has gone through several rounds of discarding some submissions and moving on with the most promising.
 As late as July 2020 the third round was announced, making this a very relevant topic.
 In the third round seven submissions remain, four schemes for key exchange and three for authentication.
 
-Maybe interesting to compare size of keys and efficiency to RSA and Diffie-Hellmann (and ECD)
+% Maybe interesting to compare size of keys and efficiency to RSA and Diffie-Hellmann (and ECD)
 
 \subsection{Why it matters now!}
+How long until this is a realistic threat?
+As of now, there exists no known quantum computers powerful enough to factorize even trivially large numbers.
+The current record on a quantum computer using Shor's algorithm is 21($3\times7$)\footnote{This is not the largest number factorized by quantum computers, that would be 56153. But that was using another algorithm, which is not fast for large numbers.}\cite{shor21}.
+
 One important issue to consider is the security of today's communication from future attack.
 An adversary could in theory record vast amounts of encrypted communication today, knowing that the information will be possible to decrypt when powerful quantum computers are available.
 There are two conclusions to be drawn from this notion.
