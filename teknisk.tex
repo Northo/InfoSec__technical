@@ -8,6 +8,7 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{quoting}
+\usepackage{microtype}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
@@ -55,10 +56,10 @@ For the sake of brevity however, we focus here on encryption.
 
 There is an inherent issue with encryption over the web -- how does two parties, who have never met in person, establish a secure connection that is obfuscated for anyone else, when the establishment of such communication must happen over open communication?
 The answer is asymmetric encryption, also known as public-key encryption
-\footnote{The author is at unease calling general asymmetric encryption public-key encryption, as it paints a misleading mental image for some algorithms. The term \emph{asymmetric} will therefor be used throughout.}.
+\footnote{The author is at unease calling general asymmetric encryption public-key encryption, as it paints a misleading mental image for some algorithms. The term \emph{asymmetric} will therefore be used throughout.}.
 
 The most well known asymmetric encryption algorithm is RSA, which the reader might have heard of.
-There is also the Diffie-Hellman algorithm, with its many variants, which becoming increasingly more popular, for its many advantages over RSA\cite{cryptographyStallings}.
+There is also the Diffie-Hellman algorithm, with its many variants, which is becoming increasingly more popular, for its many advantages over RSA\cite{cryptographyStallings}.
 They do both, however, rely on the same basic principle: asymmetric encryption schemes are methods for establishing a secure connection between parties without requiring a pre-established shared secret.
 
 %% In modern encryption, asymmetric encryption is mainly used as a key-exchange protocol.
@@ -100,8 +101,8 @@ A similar problem exists for discrete logarithms: given numbers $N$ and $a$, fin
 One may show that solving one of the problems, allows you to solve the other.
 
 Both Diffie-Hellman and RSA are, though not terribly complicated, too lengthy to describe in depth here, so a quick outline will suffice.
-Suppose we have two people, Alice and Bob, who wish to establish encrypted communication.
 We will here describe the fundamentals of Diffie-Hellman\cite{diffieHellman}.
+Suppose we have two people, Alice and Bob, who wish to establish encrypted communication.
 Alice and Bob first generate a number each, a and b, which are kept secret.
 They also agree on some number g, which is open for anyone to see.
 Alice then computes the number $g^a$, and sends it to Bob.
@@ -123,7 +124,7 @@ Of course, note also that $g^a g^b = g^{a+b}\neq g^{ab}$.
 
 \section{Why are quantum computers a threat?}
 Put quite pedantically, the reason that the factorization problem is hard to solve, is that given $N = a \times b$, with $a,b$ some unknown primes, we know no function $f$ such that $a = f(N)$ (or $b=\tilde{f}(N)$ for that matter).
-One must simply guess $a$ and $b$ until we find some numbers that produce $N$ -- a brute force attack. \footnote{There exists techniques for limiting what $a$ and $b$ may be and finding the most efficient order in which to choose, however the principle stands.}
+One must simply guess $a$ and $b$ until we find some numbers that produce $N$ -- a brute force attack. \footnote{There exists techniques for limiting what $a$ and $b$ may be and finding the most efficient order in which to choose. However the principle stands.}
 With $N$ being numbers with hundreds of digits, this problem is simply too time consuming to be practically solvable.
 %% For the technically inclined, we mention that the best known \emph{classical} method for finding the factors of $N$ is the general number field sieve, which in essence is a clever way to brute force, has a complexity of
 %% $\mathcal{O}(e^{1.9 (\log N)^\frac13 (\log\log N)^\frac23})$ with the important part being that we have an exponential function.
@@ -141,14 +142,15 @@ A quantum computer works in much the same way.
 It has qbits, which may have one of two values, 1 or 0.
 However, exploiting the nature of quantum mechanics, we may put one quantum bit in several states at the same time, say 1 \emph{and} 0.
 Or we may say that it is almost entirely in the state 1, but also a little in the state 0, say 90\% and 10\%.
-The important thing to note is that the qbit is \emph{not} in the state 0.9 or 0.5!
+The important thing to note is that the qbit is \emph{not} in the state 0.5 or 0.9!
 It is simply in the state 1 \emph{and} 0, a concept that only exists in quantum mechanics that is not relatable in our classical world.
 
-Given four qbits, we may have the state 1001 \emph{and} 0011 at the same time, or in decimal the numbers 9 \emph{and} 3.
+Given four qbits, we may have the state 1001 \emph{and} 0011 at the same time, or 9 \emph{and} 3 in decimal.
 Like classical computers, quantum computers may perform computations on these numbers, for example add one, giving 10 and 4, or 1010 and 0100.
-The important thing is that the quantum computer did not perform 9+1=10 and \emph{then} 3+1=4, it performed (9 \emph{and} 3) + 1 = 10 \emph{and} 4!
+Importantly, the quantum computer did not perform 9+1=10 and \emph{then} 3+1=4.
+It performed (9 \emph{and} 3) + 1 = 10 \emph{and} 4!
 Quite simplified, Shor's algorithm exploits this by trying all possible factors of $N$ at the same time.
-As a mental image, though not correct, it may be helpful to imagine that we have the state 2 and 3 and 5 and 7 and ... and then try to divide $N$ by that state, we should then get $N$/2 and $N$/3 and $N$/5 and $N$/7 and ..., and we simply find the number that is also a integer. \footnote{Note that this is \emph{vastly} simplified. Anyone with knowledge of quantum mechanics will immediately recognize the issue of measurement in this example. The actual algorithm exploits a clever measurement giving a periodic state that through a quantum fourier transform may more easily be measured.}
+As a mental image, though not correct, it may be helpful to imagine that we have the state 2 and 3 and 5 and 7 and \dots, and then divide $N$ by that state, we get $N$/2 and $N$/3 and $N$/5 and $N$/7 and \dots, and we simply find the number that is also a integer. \footnote{Note that this is \emph{vastly} simplified. Anyone with knowledge of quantum mechanics will immediately recognize the issue of measurement in this example. The actual algorithm exploits a clever measurement giving a periodic state that through a quantum fourier transform may more easily be measured.}
 
 %% Note to self:
 %% Shor's algorithm may be run on a classical machine, but one of the steps is slow.
@@ -156,7 +158,7 @@ As a mental image, though not correct, it may be helpful to imagine that we have
 \subsection{The solution}
 It is obvious that a post-quantum secure encryption standard has to rely on some different mechanism than the current standards -- the factorization problem.
 As is common in cryptography research one tries to find methods that can be shown to reduce to known mathematical problems, for which there exist no known fast algorithm -- just like one did with the reduction of RSA and Diffie-Hellman into the hidden subgroup problem (integer factorization).
-In 2016 the National Institute of Science and Technology (NIST) initiated a standardization process for finding new methods of authentication an key exchange for the post-quantum era.
+In 2016 the National Institute of Science and Technology (NIST) initiated a standardization process for finding new methods of authentication and key exchange for the post-quantum era.
 This process has gone through several rounds of discarding some submissions and moving on with the most promising.
 As late as July 2020 the third round was announced, making this a very relevant topic.
 In the third round seven submissions remain, four schemes for key exchange and three for authentication.
@@ -166,7 +168,7 @@ In the third round seven submissions remain, four schemes for key exchange and t
 \subsection{Why it matters now!}
 How long until this is a realistic threat?
 As of now, there exists no known quantum computers powerful enough to factorize even trivially large numbers.
-The current record on a quantum computer using Shor's algorithm is 21($3\times7$)\footnote{This is not the largest number factorized by quantum computers, that would be 56153. But that was using another algorithm, which is not fast for large numbers.}\cite{shor21}.
+The current record on a quantum computer using Shor's algorithm is 21($3\times7$)\footnote{This is not the largest number factorized by quantum computers, that would be 56153. That was, however, using another algorithm, which is not fast for large numbers.}\cite{shor21}.
 
 One important issue to consider is the security of today's communication from future attack.
 An adversary could in theory record vast amounts of encrypted communication today, knowing that the information will be possible to decrypt when powerful quantum computers are available.
